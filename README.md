@@ -41,3 +41,13 @@ var getClient = require('/lib/em_ti_utilities/get_client').create({
 // http://brianpattison.com/api/v1/whois.json?firstName=Brian&lastName=Pattison
 
 ```
+
+## Add Ember-Titanium Utilities to your Titanium Project
+
+Use this command in Terminal while in the root directory of your Titanium project:
+
+`$ git submodule add git://github.com/brianpattison/ember-titanium-utilities.git Resources/lib/em_ti_utilities`
+
+## GitHub: Working with submodules
+
+http://help.github.com/submodules
