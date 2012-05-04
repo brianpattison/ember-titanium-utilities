@@ -1,6 +1,21 @@
 var Ember = require('/lib/em_ti/ember-runtime');
 
 var GeolocationController = Ember.Object.extend({
+  latBinding: Ember.Binding.transform(function(value) {
+    if (Ember.none(value)) return;
+    return value.coords.latitude;
+  }).from('content').oneWay(),
+  
+  lngBinding: Ember.Binding.transform(function(value) {
+    if (Ember.none(value)) return;
+    return value.coords.longitude;
+  }).from('content').oneWay(),
+  
+  timestampBinding: Ember.Binding.transform(function(value) {
+    if (Ember.none(value)) return;
+    return value.coords.timestamp;
+  }).from('content').oneWay(),
+  
   content: null,
   
   accuracy: Titanium.Geolocation.ACCURACY_BEST,
@@ -8,28 +23,12 @@ var GeolocationController = Ember.Object.extend({
   purpose: null,
   watching: false,
   
-  lat: function() {
-    if (Ember.none(this.get('content'))) return;
-    return this.get('content').coords.latitude;
-  }.property('content').cacheable(),
-  
-  lng: function() {
-    if (Ember.none(this.get('content'))) return;
-    return this.get('content').coords.longitude;
-  }.property('content').cacheable(),
-  
-  timestamp: function() {
-    if (Ember.none(this.get('content'))) return;
-    return this.get('content').coords.timestamp;
-  }.property('content').cacheable(),
-  
   init: function() {
     this._super();
     
     if (this.get('purpose') === null) {
       Ti.API.warn('[Geolocation] You must set the purpose to use geolocation.');
     } else {
-      Ti.Geolocation.preferredProvider = this.get('preferredProvider');
       Ti.Geolocation.purpose = this.get('purpose');
       Ti.Geolocation.accuracy = this.get('accuracy');
       Ti.Geolocation.distanceFilter = this.get('distanceFilter');
@@ -38,7 +37,7 @@ var GeolocationController = Ember.Object.extend({
   },
   
   destroy: function() {
-    if (this.get('watching')) {
+    if (this.get('watching') === true) {
       Ti.Geolocation.removeEventListener('location', function(e) {
         self.refreshPosition(e);
       });
@@ -54,7 +53,7 @@ var GeolocationController = Ember.Object.extend({
     //     longitude: -96
     //   }
     // });
-    if (callback) callback();
+    if (typeof callback === 'function') callback();
   },
   
   refreshPosition: function(data, callback) {
@@ -89,7 +88,7 @@ var GeolocationController = Ember.Object.extend({
         this.set('content', e);
       }
     }
-    if (callback) callback();
+    if (typeof callback === 'function') callback();
   },
   
   translateErrorCode: function(code) {
@@ -112,7 +111,7 @@ var GeolocationController = Ember.Object.extend({
   
   watchPosition: function() {
     var self = this;
-    if (!this.get('watching')) {
+    if (this.get('watching') !== true) {
       this.set('watching', true);
       Ti.Geolocation.addEventListener('location', function(e) {
         self.refreshPosition(e);

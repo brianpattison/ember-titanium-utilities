@@ -1,4 +1,8 @@
-var Ember = require('/lib/em_ti/ember-runtime');
+if (Ti.Platform.osname === 'iphone') {
+  var Ember = require('/lib/em_ti/ember-runtime');
+} else {
+  Ti.include('/lib/em_ti/ember-runtime-android.js');
+}
 
 var PostClient = Ember.Object.extend({
   appName: null,
