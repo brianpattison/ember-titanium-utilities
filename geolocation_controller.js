@@ -11,17 +11,17 @@ var GeolocationController = Ember.Object.extend({
   lat: function() {
     if (Ember.none(this.get('content'))) return;
     return this.get('content').coords.latitude;
-  }.property('content').cacheable(),
+  }.property('content'),
   
   lng: function() {
     if (Ember.none(this.get('content'))) return;
     return this.get('content').coords.longitude;
-  }.property('content').cacheable(),
+  }.property('content'),
   
   timestamp: function() {
     if (Ember.none(this.get('content'))) return;
     return this.get('content').coords.timestamp;
-  }.property('content').cacheable(),
+  }.property('content'),
   
   init: function() {
     this._super();

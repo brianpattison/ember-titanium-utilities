@@ -30,7 +30,7 @@ var GetClient = Ember.Object.extend({
     }
     Ti.API.debug('[GetClient] URL with Params: ' + fullUrl);
     return fullUrl;
-  }.property('data', 'host', 'url').cacheable(),
+  }.property('data', 'host', 'url'),
   
   init: function() {
     this._super();

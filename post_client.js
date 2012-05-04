@@ -8,7 +8,7 @@ var PostClient = Ember.Object.extend({
   
   fullUrl: function() {
     return this.get('host') + this.get('url');
-  }.property('host', 'url').cacheable(),
+  }.property('host', 'url'),
   
   init: function() {
     this._super();

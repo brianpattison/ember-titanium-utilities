@@ -15,7 +15,7 @@ var GeolocationInfo = Ember.Object.extend({
 		var x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLng);
 		var bearing = ((Math.atan2(y, x) * 180/Math.PI) + 360) % 360;
 		return bearing;
-  }.property('lat1', 'lng1', 'lat2', 'lng2').cacheable(),
+  }.property('lat1', 'lng1', 'lat2', 'lng2'),
   
   distance: function() {
     var lat1 = this.get('lat1'), lng1 = this.get('lng1'), lat2 = this.get('lat2'), lng2 = this.get('lng2');
@@ -31,7 +31,7 @@ var GeolocationInfo = Ember.Object.extend({
 		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
 		var d = R * c;
 		return d / 1.609344; // Divided by 1.609344 to get miles
-  }.property('lat1', 'lng1', 'lat2', 'lng2').cacheable(),
+  }.property('lat1', 'lng1', 'lat2', 'lng2'),
   
   formattedDistance: function() {
 		var distance = this.get('distance');
@@ -45,7 +45,7 @@ var GeolocationInfo = Ember.Object.extend({
 			formattedDistance = (Math.round(distance * 100)/100) + ' mi';
 		}
 		return formattedDistance;
-	}.property('distance').cacheable(),
+	}.property('distance'),
 	
 	formattedDistanceWithCardinal: function() {
 		var formattedDistance = this.get('formattedDistance'), cardinal = this.get('cardinal');
@@ -53,7 +53,7 @@ var GeolocationInfo = Ember.Object.extend({
 		if (formattedDistance === '. . .' || Ember.none(cardinal)) return '. . .';
 		
 		return formattedDistance + ' ' + cardinal;
-	}.property('formattedDistance', 'cardinal').cacheable(),
+	}.property('formattedDistance', 'cardinal'),
 	
   // Try to not fire off too many observers by only updating cardinal if it's different.
   // I'm not sure if it actually helps, but it may keep formattedDistanceWithCardinal from firing an extra time
