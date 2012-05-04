@@ -1,4 +1,4 @@
-if (Ti.Platform.osname === 'iphone') {
+if (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad') {
   var Ember = require('/lib/em_ti/ember-runtime');
 } else {
   Ti.include('/lib/em_ti/ember-runtime-android.js');
